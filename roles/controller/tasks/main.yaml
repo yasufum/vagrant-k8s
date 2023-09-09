@@ -1,0 +1,4 @@
+---
+- name: setup kubeadm
+  include_tasks:
+    file: kubeadm.yaml

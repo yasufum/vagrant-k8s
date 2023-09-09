@@ -1,0 +1,8 @@
+---
+- name: stop swap service
+  become: yes
+  shell: systemctl stop {{ unit_swap }}
+
+- name: mask swap
+  become: yes
+  shell: systemctl mask {{ unit_swap }}

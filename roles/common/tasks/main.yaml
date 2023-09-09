@@ -1,0 +1,12 @@
+---
+- name: config swapoff
+  include_tasks:
+    file: swapoff.yaml
+
+- name: install nvim
+  include_tasks:
+    file: neovim.yaml
+
+- name: install kubernetes
+  include_tasks:
+    file: k8s.yaml

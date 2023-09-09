@@ -1,0 +1,7 @@
+---
+- name: common
+  hosts: controller
+  remote_user: vagrant
+  roles:
+    #- common
+    - controller
