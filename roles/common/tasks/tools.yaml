@@ -1,0 +1,6 @@
+---
+- name: install support tools
+  become: yes
+  apt:
+    name:
+      - lnav

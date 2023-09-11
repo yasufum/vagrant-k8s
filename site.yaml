@@ -1,7 +1,14 @@
 ---
-- name: common
+- name: controller
   hosts: controller
   remote_user: vagrant
   roles:
-    #- common
+    - common
     - controller
+
+- name: worker
+  hosts: worker
+  remote_user: vagrant
+  roles:
+    - common
+    #- worker

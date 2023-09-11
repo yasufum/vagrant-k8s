@@ -1,10 +1,10 @@
 ---
-- name: kubeadm init
-  become: yes
-  shell: kubeadm init --apiserver-advertise-address 192.168.56.101
-
 - name: create $HOME/.kube dir
   file: path={{ ansible_env.HOME }}/.kube state=directory
+
+- name: kubeadm init
+  become: yes
+  shell: kubeadm init --apiserver-advertise-address 192.168.56.101 > kubeadm-msg.txt 2>&1
 
 - name: cp kubeconfig
   become: yes
@@ -13,5 +13,11 @@
 - name: chown kubeconfig
   shell: sudo chown $(id -u):$(id -g) {{ ansible_env.HOME }}/.kube/config
 
-- name: apply network addon
-  shell: kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+- name: kubeadm init script
+  template:
+    src: templates/kubeadm-init.sh.j2
+    dest: {{ ansible_env.HOME }}/kubeadm-init.sh
+    mode: 775
+
+#- name: apply network addon
+#  shell: kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml

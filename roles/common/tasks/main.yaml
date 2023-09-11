@@ -7,6 +7,14 @@
   include_tasks:
     file: neovim.yaml
 
+- name: install astronvim
+  include_tasks:
+    file: astronvim.yaml
+
 - name: install kubernetes
   include_tasks:
     file: k8s.yaml
+
+- name: install support tools
+  include_tasks:
+    file: tools.yaml

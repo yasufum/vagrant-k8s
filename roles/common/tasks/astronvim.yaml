@@ -1,0 +1,6 @@
+---
+- name: install astronvim
+  git:
+    repo: https://github.com/AstroNvim/AstroNvim
+    dest: "{{ ansible_env.HOME }}/.config/nvim"
+    depth: 1

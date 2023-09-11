@@ -16,6 +16,12 @@
   become: yes
   shell: echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
+- name: install bash-completion for k8s client commands
+  become: yes
+  apt:
+    name:
+      bash-completion
+
 - name: install kubernetes
   become: yes
   apt:

@@ -20,3 +20,12 @@
   npm:
     name: yarn
     global: yes
+
+- name: install packages for plugins
+  become: yes
+  apt:
+    update_cache: yes
+    name:
+      - gcc
+      - g++
+      - golang
