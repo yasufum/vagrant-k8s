@@ -1,8 +1,8 @@
 #!/bin/bash
 
 sudo kubeadm init \
---apiserver-advertise-address 192.168.56.101 > kubeadm-msg.txt 2>&1
+--apiserver-advertise-address {{ controller_pub_ip }}  2>&1 | tee {{ kubeadm_msg }}
 
-sudo cp -i /etc/kubernetes/admin.conf {{ ansible_env.HOME }}/.kube/config
+sudo cp /etc/kubernetes/admin.conf {{ ansible_env.HOME }}/.kube/config
 
 sudo chown $(id -u):$(id -g) {{ ansible_env.HOME }}/.kube/config

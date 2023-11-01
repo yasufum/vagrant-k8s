@@ -1,5 +1,6 @@
 # The total number of nodes is sum of 1(controller node) + NUM_WORKER(worker nodes)
 VBOX_IMG = "bento/ubuntu-22.04"
+HOST_IF = "enp7s0"
 user = "vagrant"
 
 class K8sNode
@@ -19,10 +20,13 @@ class K8sNode
 end
 
 CONTROLLERS = [
-  K8sNode.new("controller", user, "192.168.56.101", 4, 8*1024)
+  K8sNode.new("controller", user, "192.168.56.190", 4, 4*1024)
+  #K8sNode.new("controller", user, "192.168.1.190", 4, 8*1024)
 ]
 
 WORKERS = [
-  K8sNode.new("worker1", user, "192.168.56.201", 4, 4*1024),
-  K8sNode.new("worker2", user, "192.168.56.202", 4, 4*1024),
+  K8sNode.new("worker1", user, "192.168.56.191", 4, 4*1024),
+  #K8sNode.new("worker2", user, "192.168.56.192", 4, 4*1024),
+  #K8sNode.new("worker1", user, "192.168.1.191", 4, 4*1024),
+  #K8sNode.new("worker2", user, "192.168.1.192", 4, 4*1024),
 ]

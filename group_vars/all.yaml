@@ -1,0 +1,7 @@
+---
+controller_pub_ip: 192.168.56.190
+worker1_pub_ip: 192.168.56.191
+#worker2_pub_ip: 192.168.1.192
+#controller_pub_ip: 192.168.1.190
+#worker1_pub_ip: 192.168.1.191
+#worker2_pub_ip: 192.168.1.192

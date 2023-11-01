@@ -3,14 +3,14 @@ all:
   children:
     controller:
       hosts:
-        192.168.56.101:
+        192.168.56.190:
           ansible_user: vagrant
           ansible_ssh_private_key_file: ".vagrant/machines/controller/virtualbox/private_key"
     worker:
       hosts:
-        192.168.56.201:
+        192.168.56.191:
           ansible_user: vagrant
           ansible_ssh_private_key_file: ".vagrant/machines/worker1/virtualbox/private_key"
-        #192.168.56.202:
+        #192.168.56.192:
         #  ansible_user: vagrant
         #  ansible_ssh_private_key_file: ".vagrant/machines/worker2/virtualbox/private_key"

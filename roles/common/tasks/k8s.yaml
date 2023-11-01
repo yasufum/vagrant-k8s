@@ -1,8 +1,27 @@
 ---
+- name: modprobe
+  become: yes
+  shell: modprobe {{ item }}
+  with_items:
+    - overlay
+    - br_netfilter
+
+- name: sysctl for k8s
+  sysctl:
+    name: "{{ item }}"
+    value: 1
+    sysctl_file: /etc/sysctl.d/k8s.conf
+  become: yes
+  with_items:
+    - net.bridge.bridge-nf-call-ip6tables
+    - net.bridge.bridge-nf-call-iptables
+    - net.ipv4.ip_forward
+
 - name: install packages needed to use the Kubernetes apt repository
   become: yes
   apt:
     update_cache: yes
+    cache_valid_time: 3600
     name:
       - apt-transport-https
       - ca-certificates
@@ -10,8 +29,8 @@
 
 - name: download public signing key for the Kubernetes package repositories
   become: yes
-  shell: curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-  
+  shell: curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor --batch --yes -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
 - name: add the appropriate Kubernetes apt repository
   become: yes
   shell: echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
@@ -26,8 +45,23 @@
   become: yes
   apt:
     update_cache: yes
+    cache_valid_time: 3600
     name:
       - docker.io
       - kubelet
       - kubeadm
       - kubectl
+
+- name: hold k8s programs
+  become: yes
+  shell: sudo apt-mark hold kubelet kubeadm kubectl
+
+- name: setup kubelet
+  become: yes
+  template:
+    src: templates/kubelet.j2
+    dest: /etc/default/kubelet
+
+- name: reload kubelet
+  become: yes
+  shell: systemctl daemon-reload && systemctl restart kubelet
